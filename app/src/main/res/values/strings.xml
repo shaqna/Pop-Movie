@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Pop Movie</string>
+    <string name="api_key">f7b67d9afdb3c971d4419fa4cb667fbf</string>
 </resources>
