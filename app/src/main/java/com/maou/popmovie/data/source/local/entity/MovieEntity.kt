@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 
-@Entity(tableName = "moviedb")
+@Entity(tableName = "movie")
 data class MovieEntity(
     @PrimaryKey(autoGenerate = false)
     val id: Int = 0,
