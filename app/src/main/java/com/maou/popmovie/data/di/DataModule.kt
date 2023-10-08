@@ -6,7 +6,6 @@ import com.maou.popmovie.data.service.MovieUpdateScheduler
 import com.maou.popmovie.data.source.local.LocalDataSource
 import com.maou.popmovie.data.source.local.database.LocalDatabase
 import com.maou.popmovie.data.source.remote.service.ApiService
-import com.maou.popmovie.domain.repository.PopMovieRepository
 import com.maou.popmovie.utils.Constants.BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
