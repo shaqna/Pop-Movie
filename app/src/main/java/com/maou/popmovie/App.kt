@@ -5,6 +5,7 @@ import com.maou.popmovie.data.di.localDatabaseModule
 import com.maou.popmovie.data.di.repositoryModule
 import com.maou.popmovie.data.di.retrofitModule
 import com.maou.popmovie.data.di.sourceModule
+import com.maou.popmovie.data.di.workInstanceModule
 import com.maou.popmovie.data.di.workerModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -27,7 +28,8 @@ class App: Application(), KoinComponent {
                     retrofitModule,
                     sourceModule,
                     repositoryModule,
-                    workerModule
+                    workerModule,
+                    workInstanceModule
                 )
             )
         }

@@ -4,5 +4,5 @@ import com.maou.popmovie.domain.model.Movie
 import kotlinx.coroutines.flow.Flow
 
 interface MovieUseCase {
-    fun getAllMovies(apiKey: String): Flow<Result<List<Movie>>>
+    fun getAllMovies(): Flow<Result<List<Movie>>>
 }

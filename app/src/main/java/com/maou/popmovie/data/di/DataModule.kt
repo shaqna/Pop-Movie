@@ -1,8 +1,10 @@
 package com.maou.popmovie.data.di
 
 import androidx.room.Room
+import androidx.work.WorkManager
 import com.maou.popmovie.data.repository.PopMovieRepositoryImpl
-import com.maou.popmovie.data.service.MovieUpdateScheduler
+import com.maou.popmovie.data.service.MovieUpdateWorker
+import com.maou.popmovie.data.source.MovieDataSource
 import com.maou.popmovie.data.source.local.LocalDataSource
 import com.maou.popmovie.data.source.local.database.LocalDatabase
 import com.maou.popmovie.data.source.remote.service.ApiService
@@ -14,7 +16,7 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import org.koin.androidx.workmanager.dsl.worker
+import org.koin.androidx.workmanager.dsl.workerOf
 
 val retrofitModule = module {
     single {
@@ -48,6 +50,7 @@ val localDatabaseModule = module {
 
 val sourceModule = module {
     singleOf(::LocalDataSource)
+    singleOf(::MovieDataSource)
 }
 
 val repositoryModule = module {
@@ -55,8 +58,11 @@ val repositoryModule = module {
 }
 
 val workerModule = module {
-    worker{
-        MovieUpdateScheduler(get(), get(), get(), get())
-    }
+    workerOf(::MovieUpdateWorker)
 }
 
+val workInstanceModule = module {
+    single {
+        WorkManager.getInstance(get())
+    }
+}

@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 class MovieInteractor(
     private val repository: PopMovieRepository
 ): MovieUseCase {
-    override fun getAllMovies(apiKey: String): Flow<Result<List<Movie>>> {
-        return repository.getPopMovie(apiKey)
+    override fun getAllMovies(): Flow<Result<List<Movie>>> {
+        return repository.getPopMovie()
     }
 }

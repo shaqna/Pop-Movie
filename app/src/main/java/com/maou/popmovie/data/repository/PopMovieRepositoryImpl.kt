@@ -1,6 +1,7 @@
 package com.maou.popmovie.data.repository
 
 import com.maou.popmovie.data.mapper.toListModel
+import com.maou.popmovie.data.source.MovieDataSource
 import com.maou.popmovie.data.source.local.LocalDataSource
 import com.maou.popmovie.data.source.local.dao.MovieDao
 import com.maou.popmovie.data.source.remote.service.ApiService
@@ -12,9 +13,10 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 
 class PopMovieRepositoryImpl(
-    private val localSource:  LocalDataSource
+    private val localSource:  LocalDataSource,
+    private val movieDataSource: MovieDataSource
 ): PopMovieRepository {
-    override fun getPopMovie(apiKey: String): Flow<Result<List<Movie>>> {
+    override fun getPopMovie(): Flow<Result<List<Movie>>> {
         return flow {
             try {
                 val result = localSource.selectAllMovie()
@@ -28,5 +30,13 @@ class PopMovieRepositoryImpl(
         }.catch { e->
             emit(Result.failure(e))
         }
+    }
+
+    override fun fetchPopMoviePeriodically(apiKey: String) {
+        movieDataSource.fetchMoviePeriodically(apiKey)
+    }
+
+    override fun cancelFetchPopMoviePeriodically() {
+        movieDataSource.cancelFetchingMoviePeriodically()
     }
 }
