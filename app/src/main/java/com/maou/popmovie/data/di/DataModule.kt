@@ -1,15 +1,21 @@
 package com.maou.popmovie.data.di
 
 import androidx.room.Room
+import com.maou.popmovie.data.repository.PopMovieRepositoryImpl
+import com.maou.popmovie.data.service.MovieUpdateScheduler
+import com.maou.popmovie.data.source.local.LocalDataSource
 import com.maou.popmovie.data.source.local.database.LocalDatabase
 import com.maou.popmovie.data.source.remote.service.ApiService
+import com.maou.popmovie.domain.repository.PopMovieRepository
 import com.maou.popmovie.utils.Constants.BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import org.koin.androidx.workmanager.dsl.worker
 
 val retrofitModule = module {
     single {
@@ -39,6 +45,19 @@ val localDatabaseModule = module {
     factory {
         get<LocalDatabase>().movieDao()
     }
+}
 
+val sourceModule = module {
+    singleOf(::LocalDataSource)
+}
+
+val repositoryModule = module {
+    singleOf(::PopMovieRepositoryImpl)
+}
+
+val workerModule = module {
+    worker{
+        MovieUpdateScheduler(get(), get(), get(), get())
+    }
 }
 
