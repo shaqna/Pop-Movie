@@ -1,4 +1,4 @@
-package com.maou.popmovie.domain.di
+package com.maou.popmovie.data.di
 
 import androidx.room.Room
 import com.maou.popmovie.data.source.local.database.LocalDatabase
@@ -41,3 +41,4 @@ val localDatabaseModule = module {
     }
 
 }
+
