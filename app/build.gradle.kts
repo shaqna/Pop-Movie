@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.maou.popmovie"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.maou.popmovie"
