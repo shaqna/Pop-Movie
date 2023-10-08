@@ -8,7 +8,7 @@ import com.maou.popmovie.data.source.local.LocalDataSource
 import com.maou.popmovie.data.source.remote.service.ApiService
 import org.koin.core.component.KoinComponent
 
-class MovieUpdateScheduler(
+class MovieUpdateWorker(
     private val context: Context,
     private val workParams: WorkerParameters,
     private val apiService: ApiService,
