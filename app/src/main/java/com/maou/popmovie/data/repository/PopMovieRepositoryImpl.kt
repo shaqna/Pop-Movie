@@ -1,5 +1,6 @@
 package com.maou.popmovie.data.repository
 
+import android.util.Log
 import com.maou.popmovie.data.mapper.toListModel
 import com.maou.popmovie.data.source.MovieDataSource
 import com.maou.popmovie.data.source.local.LocalDataSource
@@ -38,5 +39,20 @@ class PopMovieRepositoryImpl(
 
     override fun cancelFetchPopMoviePeriodically() {
         movieDataSource.cancelFetchingMoviePeriodically()
+    }
+
+    override suspend fun isLocalDatabaseEmpty(): Boolean {
+        var isEmpty = false
+        try {
+            val result = localSource.selectAllMovie()
+            result.collect {movies ->
+               isEmpty = movies.isEmpty()
+            }
+
+        } catch (e: Exception) {
+            Log.d("LocalDatabase", e.message.toString())
+        }
+
+        return isEmpty
     }
 }

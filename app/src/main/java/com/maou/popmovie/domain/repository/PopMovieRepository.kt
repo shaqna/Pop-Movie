@@ -8,4 +8,5 @@ interface PopMovieRepository {
     fun fetchPopMoviePeriodically(apiKey: String)
 
     fun cancelFetchPopMoviePeriodically()
+    suspend fun isLocalDatabaseEmpty(): Boolean
 }
