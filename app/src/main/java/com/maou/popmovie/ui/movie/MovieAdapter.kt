@@ -32,7 +32,10 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
         private val binding: ItemMovieBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: Movie) {
-
+            with(binding) {
+                movieTitle.text = movie.title
+                releaseDate.text = movie.releaseDate
+            }
         }
     }
 }
