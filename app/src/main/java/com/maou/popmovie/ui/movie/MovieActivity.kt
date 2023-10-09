@@ -35,8 +35,13 @@ class MovieActivity : AppCompatActivity() {
         loadKoinModules(MovieViewModel.inject())
 
         initAdapter()
+        runBackgroundTask()
         fetchMovies()
         observeMovies()
+    }
+
+    private fun runBackgroundTask() {
+        viewModel.fetchPopMoviePeriodically(getString(R.string.api_key))
     }
 
     private fun initAdapter() {

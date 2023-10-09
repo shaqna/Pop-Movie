@@ -10,4 +10,8 @@ class MovieInteractor(
     override fun getAllMovies(): Flow<Result<List<Movie>>> {
         return repository.getPopMovie()
     }
+
+    override fun fetchPopMoviePeriodically(apiKey: String) {
+        return repository.fetchPopMoviePeriodically(apiKey)
+    }
 }

@@ -5,4 +5,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface MovieUseCase {
     fun getAllMovies(): Flow<Result<List<Movie>>>
+    fun fetchPopMoviePeriodically(apiKey: String)
 }

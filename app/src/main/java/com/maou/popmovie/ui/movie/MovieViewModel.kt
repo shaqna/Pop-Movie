@@ -40,6 +40,12 @@ class MovieViewModel(
         }
     }
 
+    fun fetchPopMoviePeriodically(apiKey: String) {
+        viewModelScope.launch {
+            movieUseCase.fetchPopMoviePeriodically(apiKey)
+        }
+    }
+
     companion object {
         fun inject() = module {
             viewModelOf(::MovieViewModel)
