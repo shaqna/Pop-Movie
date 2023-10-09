@@ -9,8 +9,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.work.WorkManager
+import androidx.work.WorkQuery
+import androidx.work.WorkQuery.Builder
 import com.maou.popmovie.R
 import com.maou.popmovie.databinding.ActivityMovieBinding
+import com.maou.popmovie.utils.Constants
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -38,6 +42,23 @@ class MovieActivity : AppCompatActivity() {
         runBackgroundTask()
         fetchMovies()
         observeMovies()
+        observeUpdateMovie()
+    }
+
+    private fun observeUpdateMovie() {
+        val workManager = WorkManager.getInstance(this)
+
+        workManager.getWorkInfosByTagLiveData(Constants.TAG_FETCH_LATEST_MOVIE)
+            .observe(this) { workInfos ->
+                for(workInfo in workInfos) {
+                    showNotification()
+                }
+            }
+
+    }
+
+    private fun showNotification() {
+        TODO("Not yet implemented")
     }
 
     private fun runBackgroundTask() {

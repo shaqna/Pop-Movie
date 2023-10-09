@@ -7,11 +7,11 @@ import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.maou.popmovie.data.service.MovieUpdateWorker
+import com.maou.popmovie.utils.Constants.FETCH_LATEST_MOVIE_TASK
+import com.maou.popmovie.utils.Constants.TAG_FETCH_LATEST_MOVIE
 import java.util.concurrent.TimeUnit
 
 private const val REFRESH_RATE_MINUTES = 1L
-private const val FETCH_LATEST_MOVIE_TASK = "FetchUpdateMovie"
-private const val TAG_FETCH_LATEST_MOVIE = "FetchUpdateMovieTag"
 class MovieDataSource(
     private val workManager: WorkManager
 ) {
