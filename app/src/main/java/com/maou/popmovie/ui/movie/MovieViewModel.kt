@@ -15,7 +15,7 @@ class MovieViewModel(
 ): ViewModel() {
 
     private val _movies: MutableStateFlow<MovieUiState> = MutableStateFlow(MovieUiState.Init)
-    private val movies: StateFlow<MovieUiState> = _movies
+    val movies: StateFlow<MovieUiState> = _movies
 
     fun fetchMovies() {
         viewModelScope.launch {
