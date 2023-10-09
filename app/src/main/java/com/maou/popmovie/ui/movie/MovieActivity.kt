@@ -14,6 +14,7 @@ import com.maou.popmovie.databinding.ActivityMovieBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.context.loadKoinModules
 
 private const val TAG = "MovieActivity"
 
@@ -31,6 +32,7 @@ class MovieActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        loadKoinModules(MovieViewModel.inject())
 
         initAdapter()
         fetchMovies()
