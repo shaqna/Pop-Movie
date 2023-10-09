@@ -1,10 +1,15 @@
 package com.maou.popmovie.ui.movie
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.NotificationCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -33,6 +38,17 @@ class MovieActivity : AppCompatActivity() {
 
     private val viewModel: MovieViewModel by viewModel()
 
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                Toast.makeText(this, "Notifications permission granted", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Notifications permission rejected", Toast.LENGTH_SHORT).show()
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -51,15 +67,28 @@ class MovieActivity : AppCompatActivity() {
         workManager.getWorkInfosByTagLiveData(Constants.TAG_FETCH_LATEST_MOVIE)
             .observe(this) { workInfos ->
                 for(workInfo in workInfos) {
-                    showNotification()
+                    showNotification("Pesan", "Movie telah diperbarui")
                 }
             }
 
     }
 
-    private fun showNotification() {
-        TODO("Not yet implemented")
+    private fun showNotification(title: String, description: String?) {
+        val notificationManager = applicationContext.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        val notification: NotificationCompat.Builder = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
+            .setSmallIcon(R.drawable.baseline_notifications_24)
+            .setContentTitle(title)
+            .setContentText(description)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setDefaults(NotificationCompat.DEFAULT_ALL)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH)
+            notification.setChannelId(CHANNEL_ID)
+            notificationManager.createNotificationChannel(channel)
+        }
+        notificationManager.notify(NOTIFICATION_ID, notification.build())
     }
+
 
     private fun runBackgroundTask() {
         viewModel.fetchPopMoviePeriodically(getString(R.string.api_key))
@@ -110,5 +139,9 @@ class MovieActivity : AppCompatActivity() {
         else
             binding.progressBar.visibility = View.GONE
     }
-
+    companion object {
+        const val NOTIFICATION_ID = 1
+        const val CHANNEL_ID = "channel_01"
+        const val CHANNEL_NAME = "dicoding channel"
+    }
 }
