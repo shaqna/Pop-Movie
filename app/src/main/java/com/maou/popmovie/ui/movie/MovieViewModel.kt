@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import org.koin.dsl.module
+import org.koin.androidx.viewmodel.dsl.viewModelOf
 
 class MovieViewModel(
     private val movieUseCase: MovieUseCase
@@ -41,7 +42,7 @@ class MovieViewModel(
 
     companion object {
         fun inject() = module {
-
+            viewModelOf(::MovieViewModel)
         }
     }
 }
