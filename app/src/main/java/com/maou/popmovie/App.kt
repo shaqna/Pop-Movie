@@ -7,6 +7,7 @@ import com.maou.popmovie.data.di.retrofitModule
 import com.maou.popmovie.data.di.sourceModule
 import com.maou.popmovie.data.di.workInstanceModule
 import com.maou.popmovie.data.di.workerModule
+import com.maou.popmovie.domain.di.domainModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.component.KoinComponent
@@ -29,7 +30,8 @@ class App: Application(), KoinComponent {
                     sourceModule,
                     repositoryModule,
                     workerModule,
-                    workInstanceModule
+                    workInstanceModule,
+                    domainModule
                 )
             )
         }
